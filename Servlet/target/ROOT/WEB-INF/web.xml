@@ -1,0 +1,11 @@
+<web-app>
+    <servlet>
+        <servlet-name>Hello</servlet-name>
+        <servlet-class>com.iftekhar.HelloServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Hello</servlet-name>
+        <url-pattern>/get-Servlet</url-pattern>
+    </servlet-mapping>
+</web-app>
