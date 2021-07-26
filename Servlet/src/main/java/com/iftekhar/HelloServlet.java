@@ -26,21 +26,21 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try(var out = resp.getOutputStream()) {
-
-
+        try{
             showData();
-            RequestDispatcher view = req.getRequestDispatcher("views/Hello.jsp");
-            req.setAttribute("paymentMethodList",paymentMethods);
+
+
             req.setAttribute("msg","Success");
+            req.setAttribute("paymentMethodList",paymentMethods);
+
+            RequestDispatcher view = req.getRequestDispatcher("views/Hello.jsp");
             view.forward(req, resp);
 
-        } catch (ClassNotFoundException e) {
 
+
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
 
     }
     public void showData() throws ClassNotFoundException {
@@ -65,11 +65,11 @@ public class HelloServlet extends HttpServlet {
             while (resultSet.next()){
                 PaymentMethod payment = new PaymentMethod();
 
-                payment.setId(resultSet.getString("id"));
-                payment.setAccount(resultSet.getString("account"));
-                payment.setMobile(resultSet.getString("mobile"));
-                payment.setIssueDate(resultSet.getString("issue_date"));
-                payment.setExpireDate(resultSet.getString("expire_date"));
+                payment.setId(resultSet.getString("id")==null?"": resultSet.getString("id"));
+                payment.setAccount(resultSet.getString("account")==null?"": resultSet.getString("account"));
+                payment.setMobile(resultSet.getString("mobile")==null?"": resultSet.getString("mobile"));
+                payment.setIssueDate(resultSet.getString("issue_date")==null?"": resultSet.getString("issue_date"));
+                payment.setExpireDate(resultSet.getString("expire_date")==null?"": resultSet.getString("expire_date"));
 
                 paymentMethods.add(payment);
 
@@ -82,10 +82,13 @@ public class HelloServlet extends HttpServlet {
 //                this.issueDate.add(resultSet.getString("issue_date"));
 //                this.expireDate.add(resultSet.getString("expire_date"));
             }
+            System.out.println("========");
 
         }catch (SQLException sqlException){
             sqlException.printStackTrace();
         }
     }
 }
+
+
 
